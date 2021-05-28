@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 @Table (name = "postagens") 
 public class Postagem {
 	
+	
 	@Id
 	//A anotation @GeneratedValue é utilizada para informar que a geração do valor do id será gerenciada pelo provedor de persistência (JPA Hibernate)
 	//Quando não anotamos o campo com essa opção, significa que a responsabilidade de gerar e gerenciar as chaves primárias do nosso código

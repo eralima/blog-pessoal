@@ -16,32 +16,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//Crie um  controller
+//Crie uma camada de Controller chamada PostagemController 
 
 @RestController
 @RequestMapping("/postagens")
-
-//
 @CrossOrigin("*")
 public class PostagemController {
 
 	@Autowired
 	private PostagemRepository repository;
 
-	// Crie um método findAll
-
-	@GetMapping
+	// Crie um método findAllPostagem, um endPoint com a capacidade de trazer todas as Postagem.
 	
+	@GetMapping
 	//ResponseEntity representa toda a resposta HTTP, ou seja, devolve como resposta o status code - informa o que aconteceu com a requisisição através de um valor que varia de 100 a 500 - headers 
 	//e body - onde geralmente enviamos dados que queremos gravar no banco de dados
 	public ResponseEntity<List<Postagem>> todasPostagens() {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
-	// Crie um método findById
+	// Crie um método findByIDPostagem, um endPoint com a função de trazer uma única postagem por id.
+
 	@GetMapping("/{id}")
 	//A anotação @PathVariable indica que o valor da variável virá da URL
 	public ResponseEntity<Postagem> postagemID(@PathVariable long id) {
@@ -49,22 +46,30 @@ public class PostagemController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	// Crie um método findById
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Postagem>> postagemPeloTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
+	//Crie um método postPostagem, um endPoint com a função de gravar uma nova postagem no banco de dados.
+
 	@PostMapping
-	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> postPostagem (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 	
+	//Crie um método putPostagem, um endPoint com a função de atualizar dados de uma postagem.
+
 	@PutMapping
-	public ResponseEntity<Postagem> alterar (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> alterarPostagem (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 	
+	//Crie um método deletePostagem, um endPoint com a função de apagar uma Postagem do banco de dados.
+	@DeleteMapping("/{id}")
+	public void deletarPostagem(@PathVariable long id) {
+		repository.deleteById(id);
+	}
 	
-	
+
 }
