@@ -29,7 +29,6 @@ public class PostagemController {
 	private PostagemRepository repository;
 
 	// Crie um método findAllPostagem, um endPoint com a capacidade de trazer todas as Postagem.
-	
 	@GetMapping
 	//ResponseEntity representa toda a resposta HTTP, ou seja, devolve como resposta o status code - informa o que aconteceu com a requisisição através de um valor que varia de 100 a 500 - headers 
 	//e body - onde geralmente enviamos dados que queremos gravar no banco de dados
@@ -38,14 +37,13 @@ public class PostagemController {
 	}
 
 	// Crie um método findByIDPostagem, um endPoint com a função de trazer uma única postagem por id.
-
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") 
 	//A anotação @PathVariable indica que o valor da variável virá da URL
-	public ResponseEntity<Postagem> postagemID(@PathVariable long id) {
+	public ResponseEntity<Postagem> postagemId(@PathVariable long id) {
 		return repository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.notFound().build());
 	}
-
+	
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Postagem>> postagemPeloTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
@@ -71,5 +69,7 @@ public class PostagemController {
 		repository.deleteById(id);
 	}
 	
-
+	//Crie um método getByTitulo no controller, um endPoint com a função de trazer uma única postagem por título.
+	
+	
 }
