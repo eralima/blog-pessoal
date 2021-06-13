@@ -1,9 +1,11 @@
 package org.generation.blogPessoal.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,17 +20,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table (name = "temas")
 public class Tema {
-	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotNull
-	private String descricao;
+	@NotNull(message = "Insira uma descrição no tema da postagem") private String descricao;
 	
-	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
+	/*O atributo mappedBy é utilizado quando temos um relacionamento bidirecional entre duas classes. É um atributo utilizado
+	nas annotations @OneToMany, @OneToOne e @ManyToMany. Utilizamos o atributo mappedBy para definir o lado de referência - o 
+	lado "filho".
+	O valor do atributo mappedBy é o nome do atributo de mapeamento de associação no lado do proprietário.*/
+	
+	/*O atributo fetch */
+	@OneToMany(mappedBy = "tema", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("tema")
-	private List<Postagem> postagem;
+	private List<Postagem> postagens = new ArrayList<>();
 
 	public long getId() {
 		return id;
@@ -47,10 +53,10 @@ public class Tema {
 	}
 
 	public List<Postagem> getPostagem() {
-		return postagem;
+		return postagens;
 	}
 
 	public void setPostagem(List<Postagem> postagem) {
-		this.postagem = postagem;
+		this.postagens = postagem;
 	}
 }
