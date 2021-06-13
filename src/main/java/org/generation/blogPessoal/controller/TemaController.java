@@ -18,8 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 //Crie uma camada de Controller com o nome de TemaController 
-
 @RestController
+
+/*O CORS (Cross-origin Resource Sharing) é um mecanismo utilizado pelos navegadores para compartilhar recursos 
+ entre diferentes origens. O CORS faz uso de headers do HTTP para informar aos navegadores se determinado 
+ recurso pode ser ou não acessado. Quando implementado, o CORS permite que um site acesse recursos de outro 
+ site mesmo estando em domínios diferentes.
+ Os navegadores fazem uso de uma funcionalidade de segurança chamada same-origin policy, que limita que um 
+ recurso de  um site só pode ser acessado por outro site se os dois tiverem a mesma origem, ou seja, o mesmo 
+ dominio, endereço.
+ A origem de um site combinação entre o protocolo (http ou https), o host (painel.treinaweb.com.br) e a porta -
+ que pode ser omitida -  de um determinado endereço (http://painel.treinaweb.com.br/).
+ Se a origem de duas URLs forem idênticas, a interação entre esses recursos pode acontecer sem problema.*/
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/tema")
 public class TemaController {
