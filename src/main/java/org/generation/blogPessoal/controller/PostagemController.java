@@ -30,17 +30,23 @@ public class PostagemController {
 
 	// Crie um método findAllPostagem, um endPoint com a capacidade de trazer todas as Postagem.
 	@GetMapping
-	//ResponseEntity representa toda a resposta HTTP, ou seja, devolve como resposta o status code - informa o que aconteceu com a requisisição através de um valor que varia de 100 a 500 - headers 
-	//e body - onde geralmente enviamos dados que queremos gravar no banco de dados
+	
+	/*ResponseEntity representa toda a resposta HTTP, ou seja, devolve como resposta o status code - informa o que aconteceu com a requisisição
+	através de um valor que varia de 100 a 500 - headers - - e body - onde geralmente enviamos dados que queremos gravar no banco de dados*/
 	public ResponseEntity<List<Postagem>> todasPostagens() {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
 	// Crie um método findByIDPostagem, um endPoint com a função de trazer uma única postagem por id.
 	@GetMapping("/{id}") 
+	
 	//A anotação @PathVariable indica que o valor da variável virá da URL
 	public ResponseEntity<Postagem> postagemId(@PathVariable long id) {
 		return repository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
+				
+		/*A função notFound(), diferentemente da ok(), retorna um ResponseEntity.HeadersBuilder.Porém, como desejamos devolver um 
+		ResponseEntity, fazemos uma chamada da função build() que devolve um ResponseEntity com toda a configuração que foi feita a partir
+		da chamada do notFound()*/
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
@@ -50,7 +56,6 @@ public class PostagemController {
 	}
 	
 	//Crie um método postPostagem, um endPoint com a função de gravar uma nova postagem no banco de dados.
-
 	@PostMapping
 	public ResponseEntity<Postagem> postPostagem (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
