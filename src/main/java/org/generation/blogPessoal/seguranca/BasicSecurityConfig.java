@@ -35,11 +35,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		.password(passwordEncoder().encode("generation"));
 	}
 	
-
-
-	/*O sPRING VAI GERENCIA ESSA CLASSE DE UMA BIBLIOTECA EXTERNA */
-	@Bean /*Normalmente usar em classes de configuração*/
-	
+	@Bean
 	/*Definindo o codificador de senha*/
 	public PasswordEncoder passwordEncoder() {
 		/**/
