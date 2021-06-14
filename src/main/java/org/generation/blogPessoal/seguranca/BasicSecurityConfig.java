@@ -48,7 +48,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/*Definir para quem, quais métodos de quais endpoints sã*/
+		/*Definir para quais métodos de quais endpoints é necessário ou não autenticação*/
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/usuarios/login").permitAll()
 		.antMatchers(HttpMethod.POST, "/usuarios/cadastro").permitAll()
@@ -58,19 +58,14 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		/* O SpringSecurity disponibiliza alguns mecanismos para realizar a autenticação. Um deles é utlizando os dados de 
 		usuário e senha para fazer login. Nesse caso, a forma utilizada é o Basic Authentication (httpBasic()) - além dessa, existe
 		o Form login e o Digest Authentication.
-		O Basic Authentication é um esquema de autenticação simples integrado ao protocolo HTTP. O cliente envia uma reqquisição HTTP 
-		com o Authorization Headers Basic {credenciais em base 64 no formato usuário:senha}*/
+		O Basic Authentication é um esquema de autenticação simples integrado ao protocolo HTTP. O cliente envia uma reqquisição 
+		HTTP com o Authorization Headers Basic {credenciais em base 64 no formato usuário:senha}*/
 		.and().httpBasic()
 		
-		
-		
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		
 		
 		//Definição dos protocolos de proteção
 		.and().cors()
 		.and().csrf().disable();
-		
-	
 	}
 }
